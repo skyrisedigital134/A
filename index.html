@@ -3,154 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyrise Digital | Luxury Experience</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <title>Skyrise Digital | Mobile Premium</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #d4af37;
-            --black: #0a0a0a;
-            --gray: #1a1a1a;
+        :root { --gold: #d4af37; --bg: #000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Inter', sans-serif;
+            scroll-snap-type: y mandatory; /* Instagram Reels style snap */
+            overflow-y: scroll;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-
-        /* Custom Cursor */
-        #cursor {
-            width: 20px; height: 20px; background: var(--gold);
-            border-radius: 50%; position: fixed; pointer-events: none;
-            z-index: 999; mix-blend-mode: difference; transition: transform 0.1s;
+        section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+            position: relative;
         }
 
-        /* 1. Hero Section */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; position: relative;
-        }
+        /* 1. Hero Section Mobile */
         .hero h1 {
-            font-family: 'Syncopate', sans-serif; font-size: clamp(3rem, 10vw, 8rem);
-            text-align: center; line-height: 0.8; z-index: 2;
-        }
-        .hero-bg-text {
-            position: absolute; font-size: 20vw; opacity: 0.03; font-weight: 900;
-            white-space: nowrap; z-index: 1; user-select: none;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 15vw;
+            line-height: 0.9;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* 2. Horizontal Scroll Section (Projects) */
-        .horizontal-section {
-            height: 100vh; overflow: hidden; display: flex; background: var(--gray);
+        .hero p {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #666;
+            margin-bottom: 10px;
         }
-        .pin-wrap {
-            height: 100vh; display: flex; align-items: center; padding: 0 10vw;
-        }
+
+        /* 2. Mobile Project Cards */
         .project-card {
-            min-width: 600px; height: 400px; background: #222; margin-right: 100px;
-            border-radius: 20px; display: flex; align-items: flex-end; padding: 40px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            background-size: cover; background-position: center;
+            width: 100%;
+            height: 70vh;
+            background: #111;
+            border-radius: 24px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #222;
         }
-        .project-card h2 { font-family: 'Syncopate'; color: var(--gold); }
 
-        /* 3. Bento Grid Section */
-        .bento-container {
-            padding: 100px 10%; display: grid;
-            grid-template-columns: repeat(3, 1fr); gap: 20px;
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
         }
-        .bento-item {
-            background: #111; padding: 40px; border-radius: 30px;
-            border: 1px solid #222; transition: 0.5s;
-        }
-        .bento-item:hover { border-color: var(--gold); transform: translateY(-10px); }
-        .item-1 { grid-column: span 2; }
-        .item-4 { grid-column: span 3; height: 300px; }
 
-        /* 4. Footer */
-        footer {
-            height: 60vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            background: linear-gradient(to top, #111, var(--black));
+        .project-info {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
         }
-        .footer-link {
-            font-size: 5vw; text-decoration: none; color: white;
-            font-family: 'Syncopate'; transition: 0.3s;
+
+        .project-info h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 24px;
+            color: var(--gold);
         }
-        .footer-link:hover { color: var(--gold); -webkit-text-stroke: 1px var(--gold); color: transparent; }
+
+        /* 3. Floating Contact Button */
+        .contact-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div>
+    <a href="#" class="contact-fab">📩</a>
 
     <section class="hero">
-        <div class="hero-bg-text">SKYRISE DIGITAL</div>
-        <p style="color: var(--gold); letter-spacing: 5px; margin-bottom: 20px;">EST. 2026</p>
-        <h1 class="reveal">DESIGNING<br><span style="color: var(--gold)">THE FUTURE</span></h1>
+        <p>SKYRISE DIGITAL</p>
+        <h1 id="hero-title">BEYOND<br>MOBILE</h1>
+        <div style="width: 50px; height: 2px; background: var(--gold); margin-top: 20px;"></div>
     </section>
 
-    <div class="horizontal-outer">
-        <section class="horizontal-section">
-            <div class="pin-wrap">
-                <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400/222/d4af37?text=The+Dhol+Nation')">
-                    <h2>01. THE DHOL NATION</h2>
-                </div>
-                <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400/222/d4af37?text=Shere+Punjab')">
-                    <h2>02. SHERE PUNJAB</h2>
-                </div>
-                <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400/222/d4af37?text=Luxury+Web')">
-                    <h2>03. CRYPTO TRACKER</h2>
-                </div>
+    <section>
+        <div class="project-card">
+            <img class="project-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80">
+            <div class="project-info">
+                <p style="font-size: 12px; color: #aaa;">01 / WEB DESIGN</p>
+                <h2>THE DHOL NATION</h2>
             </div>
-        </section>
-    </div>
-
-    <section class="bento-container">
-        <div class="bento-item item-1"><h3>Web Design</h3><p>Premium UI/UX solutions.</p></div>
-        <div class="bento-item"><h3>Development</h3><p>Fast & Scalable code.</p></div>
-        <div class="bento-item"><h3>Branding</h3><p>Identity for the bold.</p></div>
-        <div class="bento-item item-4"><h3>YouTube Automation</h3><p>Smart content creation strategies.</p></div>
+        </div>
     </section>
 
-    <footer>
-        <p>Let's create something tagda!</p>
-        <a href="mailto:hello@skyrise.com" class="footer-link">GET IN TOUCH</a>
-    </footer>
+    <section>
+        <div class="project-card">
+            <img class="project-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80">
+            <div class="project-info">
+                <p style="font-size: 12px; color: #aaa;">02 / BRANDING</p>
+                <h2>SHERE PUNJAB</h2>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align: center; justify-content: center; align-items: center;">
+        <h2 style="font-family: 'Syncopate'; font-size: 10vw;">LET'S WORK</h2>
+        <p style="margin-top: 20px; color: #888;">Available for new projects</p>
+    </section>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Custom Cursor Movement
-        document.addEventListener("mousemove", (e) => {
-            gsap.to("#cursor", { x: e.clientX, y: e.clientY, duration: 0.5 });
+        // Hero Entrance
+        gsap.from("#hero-title", {
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power4.out"
         });
 
-        // Hero Parallax
-        gsap.to(".hero-bg-text", {
-            scrollTrigger: { trigger: ".hero", start: "top top", scrub: 2 },
-            x: -500
-        });
-
-        // Horizontal Scroll Logic
-        let sections = gsap.utils.toArray(".project-card");
-        gsap.to(sections, {
-            xPercent: -100 * (sections.length - 1),
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".horizontal-section",
-                pin: true,
-                scrub: 1,
-                snap: 1 / (sections.length - 1),
-                end: () => "+=" + document.querySelector(".horizontal-section").offsetWidth
-            }
-        });
-
-        // Reveal Animations
-        gsap.from(".bento-item", {
-            scrollTrigger: { trigger: ".bento-container", start: "top 80%" },
-            y: 100, opacity: 0, stagger: 0.2, duration: 1
+        // Cards Animation as you scroll
+        gsap.utils.toArray(".project-card").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%",
+                },
+                scale: 0.9,
+                opacity: 0,
+                duration: 1,
+                ease: "back.out(1.7)"
+            });
         });
     </script>
 </body>
