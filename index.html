@@ -1,94 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>HTML Endless Runner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyrise Digital | Premium Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        body { margin: 0; overflow: hidden; background: #333; font-family: sans-serif; }
-        canvas { display: block; background: #666; margin: 0 auto; }
-        #ui { position: absolute; top: 10px; left: 10px; color: white; font-size: 24px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #050505; /* Deep Black */
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Premium Gold Gradient Text */
+        .hero h1 {
+            font-size: 8rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #f9dfa1 0%, #d4af37 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 0.9;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 20px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+        }
+
+        /* Floating Light Effect (The "Premium" touch) */
+        .light-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(50px);
+            z-index: -1;
+        }
+
+        /* CTA Button */
+        .cta {
+            margin-top: 40px;
+            padding: 15px 40px;
+            border: 1px solid #d4af37;
+            background: transparent;
+            color: #d4af37;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0;
+            border-radius: 50px;
+        }
+
+        .cta:hover {
+            background: #d4af37;
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
     </style>
 </head>
 <body>
-    <div id="ui">Score: 0</div>
-    <canvas id="gameCanvas"></canvas>
 
-<script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const scoreElement = document.getElementById('ui');
+    <section class="hero">
+        <div class="light-glow"></div>
+        <p id="sub-text">Website Designer & Developer</p>
+        <h1 id="main-title">SKYRISE<br>DIGITAL</h1>
+        <button class="cta" id="cta-btn">View My Work</button>
+    </section>
 
-    canvas.width = 400;
-    canvas.height = 600;
+    <script>
+        // GSAP Animation Sequence
+        const tl = gsap.timeline();
 
-    let score = 0;
-    let laneWidth = canvas.width / 3;
-    let currentLane = 1; // 0: Left, 1: Middle, 2: Right
-    let player = { y: canvas.height - 100, width: 50, height: 80 };
-    let obstacles = [];
-    let speed = 5;
+        tl.to("#sub-text", {
+            opacity: 1,
+            y: -10,
+            duration: 1,
+            ease: "power4.out"
+        })
+        .to("#main-title", {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "expo.out"
+        }, "-=0.5")
+        .to("#cta-btn", {
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out"
+        }, "-=0.8");
 
-    // Control Logic
-    window.addEventListener('keydown', (e) => {
-        if (e.key === "ArrowLeft" && currentLane > 0) currentLane--;
-        if (e.key === "ArrowRight" && currentLane < 2) currentLane++;
-    });
-
-    function spawnObstacle() {
-        let lane = Math.floor(Math.random() * 3);
-        obstacles.push({ x: lane * laneWidth + (laneWidth/2 - 25), y: -100, w: 50, h: 50 });
-    }
-
-    function update() {
-        // Move obstacles
-        obstacles.forEach((obs, index) => {
-            obs.y += speed;
+        // Mouse Move Glow Effect
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.light-glow');
+            const x = e.clientX;
+            const y = e.clientY;
             
-            // Collision detection
-            let playerX = currentLane * laneWidth + (laneWidth/2 - 25);
-            if (playerX < obs.x + obs.w && playerX + player.width > obs.x &&
-                player.y < obs.y + obs.h && player.y + player.height > obs.y) {
-                alert("Game Over! Score: " + score);
-                document.location.reload();
-            }
-
-            if (obs.y > canvas.height) {
-                obstacles.splice(index, 1);
-                score++;
-                scoreElement.innerHTML = "Score: " + score;
-                if(score % 10 === 0) speed += 0.5; // Speed badhti rahegi
-            }
+            gsap.to(glow, {
+                x: x - window.innerWidth / 2,
+                y: y - window.innerHeight / 2,
+                duration: 2,
+                ease: "power2.out"
+            });
         });
-
-        if (Math.random() < 0.02) spawnObstacle();
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Draw Lanes
-        ctx.strokeStyle = "#999";
-        ctx.beginPath();
-        ctx.moveTo(laneWidth, 0); ctx.lineTo(laneWidth, canvas.height);
-        ctx.moveTo(laneWidth * 2, 0); ctx.lineTo(laneWidth * 2, canvas.height);
-        ctx.stroke();
-
-        // Draw Player (Modern Blue Box)
-        ctx.fillStyle = "#00bfff";
-        let playerX = currentLane * laneWidth + (laneWidth/2 - 25);
-        ctx.fillRect(playerX, player.y, player.width, player.height);
-
-        // Draw Obstacles (Red Boxes)
-        ctx.fillStyle = "#ff4444";
-        obstacles.forEach(obs => {
-            ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-        });
-
-        update();
-        requestAnimationFrame(draw);
-    }
-
-    draw();
-</script>
+    </script>
 </body>
 </html>
-
