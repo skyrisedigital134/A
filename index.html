@@ -3,133 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyrise Digital | Premium Portfolio</title>
+    <title>Skyrise Digital | Luxury Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        :root {
+            --gold: #d4af37;
+            --black: #0a0a0a;
+            --gray: #1a1a1a;
         }
 
-        body {
-            background-color: #050505; /* Deep Black */
-            color: #fff;
-            overflow-x: hidden;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+        /* Custom Cursor */
+        #cursor {
+            width: 20px; height: 20px; background: var(--gold);
+            border-radius: 50%; position: fixed; pointer-events: none;
+            z-index: 999; mix-blend-mode: difference; transition: transform 0.1s;
         }
 
-        /* Hero Section */
+        /* 1. Hero Section */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; position: relative;
         }
-
-        /* Premium Gold Gradient Text */
         .hero h1 {
-            font-size: 8rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            background: linear-gradient(to bottom, #f9dfa1 0%, #d4af37 50%, #b8860b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 0.9;
-            opacity: 0;
-            transform: translateY(50px);
+            font-family: 'Syncopate', sans-serif; font-size: clamp(3rem, 10vw, 8rem);
+            text-align: center; line-height: 0.8; z-index: 2;
+        }
+        .hero-bg-text {
+            position: absolute; font-size: 20vw; opacity: 0.03; font-weight: 900;
+            white-space: nowrap; z-index: 1; user-select: none;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: #888;
-            margin-top: 20px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            opacity: 0;
+        /* 2. Horizontal Scroll Section (Projects) */
+        .horizontal-section {
+            height: 100vh; overflow: hidden; display: flex; background: var(--gray);
         }
-
-        /* Floating Light Effect (The "Premium" touch) */
-        .light-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(0,0,0,0) 70%);
-            filter: blur(50px);
-            z-index: -1;
+        .pin-wrap {
+            height: 100vh; display: flex; align-items: center; padding: 0 10vw;
         }
-
-        /* CTA Button */
-        .cta {
-            margin-top: 40px;
-            padding: 15px 40px;
-            border: 1px solid #d4af37;
-            background: transparent;
-            color: #d4af37;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            opacity: 0;
-            border-radius: 50px;
+        .project-card {
+            min-width: 600px; height: 400px; background: #222; margin-right: 100px;
+            border-radius: 20px; display: flex; align-items: flex-end; padding: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background-size: cover; background-position: center;
         }
+        .project-card h2 { font-family: 'Syncopate'; color: var(--gold); }
 
-        .cta:hover {
-            background: #d4af37;
-            color: #000;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        /* 3. Bento Grid Section */
+        .bento-container {
+            padding: 100px 10%; display: grid;
+            grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
+        .bento-item {
+            background: #111; padding: 40px; border-radius: 30px;
+            border: 1px solid #222; transition: 0.5s;
+        }
+        .bento-item:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .item-1 { grid-column: span 2; }
+        .item-4 { grid-column: span 3; height: 300px; }
 
+        /* 4. Footer */
+        footer {
+            height: 60vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: linear-gradient(to top, #111, var(--black));
+        }
+        .footer-link {
+            font-size: 5vw; text-decoration: none; color: white;
+            font-family: 'Syncopate'; transition: 0.3s;
+        }
+        .footer-link:hover { color: var(--gold); -webkit-text-stroke: 1px var(--gold); color: transparent; }
     </style>
 </head>
 <body>
 
+    <div id="cursor"></div>
+
     <section class="hero">
-        <div class="light-glow"></div>
-        <p id="sub-text">Website Designer & Developer</p>
-        <h1 id="main-title">SKYRISE<br>DIGITAL</h1>
-        <button class="cta" id="cta-btn">View My Work</button>
+        <div class="hero-bg-text">SKYRISE DIGITAL</div>
+        <p style="color: var(--gold); letter-spacing: 5px; margin-bottom: 20px;">EST. 2026</p>
+        <h1 class="reveal">DESIGNING<br><span style="color: var(--gold)">THE FUTURE</span></h1>
     </section>
 
+    <div class="horizontal-outer">
+        <section class="horizontal-section">
+            <div class="pin-wrap">
+                <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400/222/d4af37?text=The+Dhol+Nation')">
+                    <h2>01. THE DHOL NATION</h2>
+                </div>
+                <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400/222/d4af37?text=Shere+Punjab')">
+                    <h2>02. SHERE PUNJAB</h2>
+                </div>
+                <div class="project-card" style="background-image: url('https://via.placeholder.com/600x400/222/d4af37?text=Luxury+Web')">
+                    <h2>03. CRYPTO TRACKER</h2>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="bento-container">
+        <div class="bento-item item-1"><h3>Web Design</h3><p>Premium UI/UX solutions.</p></div>
+        <div class="bento-item"><h3>Development</h3><p>Fast & Scalable code.</p></div>
+        <div class="bento-item"><h3>Branding</h3><p>Identity for the bold.</p></div>
+        <div class="bento-item item-4"><h3>YouTube Automation</h3><p>Smart content creation strategies.</p></div>
+    </section>
+
+    <footer>
+        <p>Let's create something tagda!</p>
+        <a href="mailto:hello@skyrise.com" class="footer-link">GET IN TOUCH</a>
+    </footer>
+
     <script>
-        // GSAP Animation Sequence
-        const tl = gsap.timeline();
+        gsap.registerPlugin(ScrollTrigger);
 
-        tl.to("#sub-text", {
-            opacity: 1,
-            y: -10,
-            duration: 1,
-            ease: "power4.out"
-        })
-        .to("#main-title", {
-            opacity: 1,
-            y: 0,
-            duration: 1.5,
-            ease: "expo.out"
-        }, "-=0.5")
-        .to("#cta-btn", {
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out"
-        }, "-=0.8");
+        // Custom Cursor Movement
+        document.addEventListener("mousemove", (e) => {
+            gsap.to("#cursor", { x: e.clientX, y: e.clientY, duration: 0.5 });
+        });
 
-        // Mouse Move Glow Effect
-        document.addEventListener('mousemove', (e) => {
-            const glow = document.querySelector('.light-glow');
-            const x = e.clientX;
-            const y = e.clientY;
-            
-            gsap.to(glow, {
-                x: x - window.innerWidth / 2,
-                y: y - window.innerHeight / 2,
-                duration: 2,
-                ease: "power2.out"
-            });
+        // Hero Parallax
+        gsap.to(".hero-bg-text", {
+            scrollTrigger: { trigger: ".hero", start: "top top", scrub: 2 },
+            x: -500
+        });
+
+        // Horizontal Scroll Logic
+        let sections = gsap.utils.toArray(".project-card");
+        gsap.to(sections, {
+            xPercent: -100 * (sections.length - 1),
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".horizontal-section",
+                pin: true,
+                scrub: 1,
+                snap: 1 / (sections.length - 1),
+                end: () => "+=" + document.querySelector(".horizontal-section").offsetWidth
+            }
+        });
+
+        // Reveal Animations
+        gsap.from(".bento-item", {
+            scrollTrigger: { trigger: ".bento-container", start: "top 80%" },
+            y: 100, opacity: 0, stagger: 0.2, duration: 1
         });
     </script>
 </body>
