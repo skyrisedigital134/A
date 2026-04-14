@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Endless Runner</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #333; font-family: sans-serif; }
+        canvas { display: block; background: #666; margin: 0 auto; }
+        #ui { position: absolute; top: 10px; left: 10px; color: white; font-size: 24px; }
+    </style>
+</head>
+<body>
+    <div id="ui">Score: 0</div>
+    <canvas id="gameCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreElement = document.getElementById('ui');
+
+    canvas.width = 400;
+    canvas.height = 600;
+
+    let score = 0;
+    let laneWidth = canvas.width / 3;
+    let currentLane = 1; // 0: Left, 1: Middle, 2: Right
+    let player = { y: canvas.height - 100, width: 50, height: 80 };
+    let obstacles = [];
+    let speed = 5;
+
+    // Control Logic
+    window.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowLeft" && currentLane > 0) currentLane--;
+        if (e.key === "ArrowRight" && currentLane < 2) currentLane++;
+    });
+
+    function spawnObstacle() {
+        let lane = Math.floor(Math.random() * 3);
+        obstacles.push({ x: lane * laneWidth + (laneWidth/2 - 25), y: -100, w: 50, h: 50 });
+    }
+
+    function update() {
+        // Move obstacles
+        obstacles.forEach((obs, index) => {
+            obs.y += speed;
+            
+            // Collision detection
+            let playerX = currentLane * laneWidth + (laneWidth/2 - 25);
+            if (playerX < obs.x + obs.w && playerX + player.width > obs.x &&
+                player.y < obs.y + obs.h && player.y + player.height > obs.y) {
+                alert("Game Over! Score: " + score);
+                document.location.reload();
+            }
+
+            if (obs.y > canvas.height) {
+                obstacles.splice(index, 1);
+                score++;
+                scoreElement.innerHTML = "Score: " + score;
+                if(score % 10 === 0) speed += 0.5; // Speed badhti rahegi
+            }
+        });
+
+        if (Math.random() < 0.02) spawnObstacle();
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Lanes
+        ctx.strokeStyle = "#999";
+        ctx.beginPath();
+        ctx.moveTo(laneWidth, 0); ctx.lineTo(laneWidth, canvas.height);
+        ctx.moveTo(laneWidth * 2, 0); ctx.lineTo(laneWidth * 2, canvas.height);
+        ctx.stroke();
+
+        // Draw Player (Modern Blue Box)
+        ctx.fillStyle = "#00bfff";
+        let playerX = currentLane * laneWidth + (laneWidth/2 - 25);
+        ctx.fillRect(playerX, player.y, player.width, player.height);
+
+        // Draw Obstacles (Red Boxes)
+        ctx.fillStyle = "#ff4444";
+        obstacles.forEach(obs => {
+            ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+        });
+
+        update();
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+</script>
+</body>
+</html>
+
