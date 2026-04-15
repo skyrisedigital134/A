@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects | SkyRise Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+        }
+
+        /* Navigation (Same as Index) */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .logo { height: 50px; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.95rem; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-blue); }
+
+        /* Portfolio Header */
+        .header {
+            text-align: center;
+            padding: 80px 5%;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        /* Project Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 0 8% 100px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.4s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.15);
+        }
+
+        .card h3 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--bg-dark);
+            background: var(--accent-blue);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .link-btn:hover {
+            background: white;
+        }
+
+        .badge {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <img src="logo.png" alt="SkyRise" class="logo">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="portfolio.html" class="active">Work</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="header" data-aos="fade-down">
+        <h1>Our Portfolio</h1>
+        <p style="color: var(--text-dim);">Digital solutions delivered with elite standards.</p>
+    </div>
+
+    <section class="grid">
+        <div class="card" data-aos="fade-up">
+            <span class="badge">Development</span>
+            <h3>QR Generator</h3>
+            <p>A smart utility tool for instant QR creation with custom branding capabilities.</p>
+            <a href="https://skyrisedigital134.github.io/QR-Generator-/" target="_blank" class="link-btn">Launch App <i class="fa fa-arrow-up-right-from-square"></i></a>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <span class="badge">Web Design</span>
+            <h3>Sonu Band</h3>
+            <p>Premium business website showcasing entertainment services with a clean UI.</p>
+            <a href="https://sonuband.netlify.app/" target="_blank" class="link-btn">Visit Site <i class="fa fa-arrow-up-right-from-square"></i></a>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <span class="badge">Branding</span>
+            <h3>Shere Punjab Dhol</h3>
+            <p>Complete digital identity and web presence for a global musical group.</p>
+            <a href="https://sherepunjabdhol.netlify.app/" target="_blank" class="link-btn">Visit Site <i class="fa fa-arrow-up-right-from-square"></i></a>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>
